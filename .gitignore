@@ -1,4 +1,10 @@
 /target
+.devenv/
+.direnv/
+outputs/
+result
+result-*
+devenv.local.nix
 *.hex
 *.uf2
 *.vil
