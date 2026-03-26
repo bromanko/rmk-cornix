@@ -51,9 +51,9 @@ resolution = 4
 
 [rmk]
 split_peripherals_num = 1
-debounce_time = 5
+debounce_time = 3
 ble_profiles_num = 5
-morse_max_num = 32
+morse_max_num = 64
 max_patterns_per_key = 8
 combo_max_num = 32
 fork_max_num = 16
@@ -78,23 +78,140 @@ dcdc_reg0_voltage = "3V3"
 [layout]
 rows = 8
 cols = 7
-layers = 10
+layers = 13
 matrix_map = """
-(0,0) (0,1) (0,2) (0,3) (0,4) (0,5)              (4,5) (4,4) (4,3) (4,2) (4,1) (4,0)
-(1,0) (1,1) (1,2) (1,3) (1,4) (1,5)              (5,5) (5,4) (5,3) (5,2) (5,1) (5,0)
-(2,0) (2,1) (2,2) (2,3) (2,4) (2,5) (2,6)  (5,6) (6,5) (6,4) (6,3) (6,2) (6,1) (6,0)
-(3,0) (3,1) (3,2) (3,3) (3,4) (3,5)              (7,5) (7,4) (7,3) (7,2) (7,1) (7,0)
+(0,0,L) (0,1,L) (0,2,L) (0,3,L) (0,4,L) (0,5,L)                        (4,5,R) (4,4,R) (4,3,R) (4,2,R) (4,1,R) (4,0,R)
+(1,0,L) (1,1,L) (1,2,L) (1,3,L) (1,4,L) (1,5,L)                        (5,5,R) (5,4,R) (5,3,R) (5,2,R) (5,1,R) (5,0,R)
+(2,0,L) (2,1,L) (2,2,L) (2,3,L) (2,4,L) (2,5,L) (2,6,L)      (5,6,R) (6,5,R) (6,4,R) (6,3,R) (6,2,R) (6,1,R) (6,0,R)
+(3,0,L) (3,1,L) (3,2,L) (3,3,L) (3,4,L) (3,5,L)                        (7,5,R) (7,4,R) (7,3,R) (7,2,R) (7,1,R) (7,0,R)
+"""
+
+[aliases]
+boot = "Bootloader"
+undo = "WM(Z, LGui)"
+redo = "WM(Z, LGui | LShift)"
+paste = "WM(V, LGui)"
+copy = "WM(C, LGui)"
+cut = "WM(X, LGui)"
+caps_word = "CapsWordToggle"
+
+[[layer]]
+name = "base"
+keys = """
+NO  Q                    W                    F                    P                    B                    J                    L                    U                    Y                    QUOT                 NO
+NO  A                    R                    S                    T                    G                    M                    N                    E                    I                    O                    NO
+NO  LT(mods_left, Z, FH) MT(X, RAlt, HRM)     C                    D                    V                    NO  NO  K           H                    COMMA                MT(Dot, RAlt, HRM)   LT(mods_right, Slash, FH) NO
+NO  NO                   NO                   LT(media, Escape, FH) LT(nav, Space, FH) LT(wm, Tab, FH) LT(sym, Enter, FH)  LT(num, Backspace, FH) LT(fun, Delete, FH) NO              NO                   NO
+"""
+encoders = [["PageDown", "PageUp"], ["AudioVolUp", "AudioVolDown"]]
+
+[[layer]]
+name = "extra"
+keys = """
+NO  Q                    W                    E                    R                    T                    Y                    U                    I                    O                    P                    NO
+NO  A                    S                    D                    F                    G                    H                    J                    K                    L                    QUOT                 NO
+NO  LT(button, Z, FH)    MT(X, RAlt, HRM)     C                    V                    B                    NO  NO  N           M                    COMMA                MT(Dot, RAlt, HRM)   LT(button, Slash, FH) NO
+NO  NO                   NO                   LT(media, Escape, FH) LT(nav, Space, FH) LT(mouse, Tab, FH) LT(sym, Enter, FH)  LT(num, Backspace, FH) LT(fun, Delete, FH)  NO              NO                   NO
 """
 
 [[layer]]
-name = "base_layer"
+name = "tap"
 keys = """
-ESC     Q     W     E     R      T                Y     U      I      O     P          BSPC
-TAB     A     S     D     F      G                H     J      K      L     SEMICOLON  QUOT
-LSHIFT  Z     X     C     V      B    NO    NO    N     M      COMMA  DOT   SLASH      RSHIFT
-LCTRL   LGUI  LALT  NO    SPACE  NO               NO    ENTER  NO     RALT  MENU       RCTRL
+NO  Q                    W                    F                    P                    B                    J                    L                    U                    Y                    QUOT                 NO
+NO  A                    R                    S                    T                    G                    M                    N                    E                    I                    O                    NO
+NO  Z                    X                    C                    D                    V                    NO  NO  K           H                    COMMA                Dot                  Slash                NO
+NO  NO                   NO                   Escape               Space                Tab                  Enter                Backspace            Delete               NO                   NO
 """
-encoders = [["PgDn", "PgUp"], ["AudioVolUp", "AudioVolDown"]]
+
+[[layer]]
+name = "button"
+keys = """
+NO  @undo                @cut                 @copy                @paste               @redo                @redo                @paste               @copy                @cut                 @undo                NO
+NO  LGui                 LAlt                 LCtrl                LShift               NO                   NO                   LShift               LCtrl                LAlt                 LGui                 NO
+NO  @undo                @cut                 @copy                @paste               @redo                NO  NO  @redo       @paste               @copy                @cut                 @undo                NO
+NO  NO                   NO                   MouseBtn3            MouseBtn1            MouseBtn2            MouseBtn2            MouseBtn1            MouseBtn3            NO                   NO                   NO
+"""
+
+[[layer]]
+name = "nav"
+keys = """
+NO  @boot                TO(tap)              TO(extra)            TO(base)             NO                   @redo                @paste               @copy                @cut                 @undo                NO
+NO  LGui                 LAlt                 LCtrl                LShift               NO                   Left                 Down                 Up                   Right                @caps_word           NO
+NO  NO                   RAlt                 TO(num)              TO(nav)              NO                   NO  NO  Home        PageDown             PageUp               End                  Insert               NO
+NO  NO                   NO                   NO                   NO                   NO                   Enter                Backspace            Delete               NO                   NO                   NO
+"""
+
+[[layer]]
+name = "mouse"
+keys = """
+NO  @boot                TO(tap)              TO(extra)            TO(base)             NO                   @redo                @paste               @copy                @cut                 @undo                NO
+NO  LGui                 LAlt                 LCtrl                LShift               NO                   MouseLeft            MouseDown            MouseUp              MouseRight           NO                   NO
+NO  NO                   RAlt                 TO(sym)              TO(mouse)            NO                   NO  NO  MouseWheelLeft MouseWheelDown      MouseWheelUp         MouseWheelRight      NO                   NO
+NO  NO                   NO                   NO                   NO                   NO                   MouseBtn2            MouseBtn1            MouseBtn3            NO                   NO                   NO
+"""
+
+[[layer]]
+name = "media"
+keys = """
+NO  @boot                TO(tap)              TO(extra)            TO(base)             NO                   NO                   NO                   NO                   NO                   NO                   NO
+NO  LGui                 LAlt                 LCtrl                LShift               NO                   MediaPrevTrack       AudioVolDown         AudioVolUp           MediaNextTrack       NO                   NO
+NO  NO                   RAlt                 TO(fun)              TO(media)            NO                   NO  NO  User10      User0                User1                User2                User3                NO
+NO  NO                   NO                   NO                   NO                   NO                   MediaStop            MediaPlayPause       AudioMute            NO                   NO                   NO
+"""
+
+[[layer]]
+name = "num"
+keys = """
+NO  LeftBracket          Kc7                  Kc8                  Kc9                  RightBracket         NO                   TO(base)             TO(extra)            TO(tap)              @boot                NO
+NO  Semicolon            Kc4                  Kc5                  Kc6                  Equal                NO                   LShift               LCtrl                LAlt                 LGui                 NO
+NO  Grave                Kc1                  Kc2                  Kc3                  Backslash            NO  NO  NO          TO(num)              TO(nav)              RAlt                 NO                   NO
+NO  NO                   NO                   Dot                  Kc0                  Minus                NO                   NO                   NO                   NO                   NO                   NO
+"""
+
+[[layer]]
+name = "sym"
+keys = """
+NO  SHIFTED(LeftBracket) SHIFTED(Kc7)         SHIFTED(Kc8)         SHIFTED(Kc9)         SHIFTED(RightBracket) NO                  TO(base)             TO(extra)            TO(tap)              @boot                NO
+NO  SHIFTED(Semicolon)   SHIFTED(Kc4)         SHIFTED(Kc5)         SHIFTED(Kc6)         SHIFTED(Equal)       NO                   LShift               LCtrl                LAlt                 LGui                 NO
+NO  SHIFTED(Grave)       SHIFTED(Kc1)         SHIFTED(Kc2)         SHIFTED(Kc3)         SHIFTED(Backslash)   NO  NO  NO          TO(sym)              TO(mouse)            RAlt                 NO                   NO
+NO  NO                   NO                   SHIFTED(Kc9)         SHIFTED(Kc0)         SHIFTED(Minus)       NO                   NO                   NO                   NO                   NO                   NO
+"""
+
+[[layer]]
+name = "fun"
+keys = """
+NO  F12                  F7                   F8                   F9                   PrintScreen          NO                   TO(base)             TO(extra)            TO(tap)              @boot                NO
+NO  F11                  F4                   F5                   F6                   ScrollLock           NO                   LShift               LCtrl                LAlt                 LGui                 NO
+NO  F10                  F1                   F2                   F3                   Pause                NO  NO  NO          TO(fun)              TO(media)            RAlt                 NO                   NO
+NO  NO                   NO                   Application          Space                Tab                  NO                   NO                   NO                   NO                   NO                   NO
+"""
+
+[[layer]]
+name = "mods_left"
+keys = """
+NO  _                    _                    _                    _                    _                    _                    _                    _                    _                    _                    NO
+NO  _                    LAlt                 LCtrl                LShift               LGui                 _                    _                    _                    _                    _                    NO
+NO  _                    _                    _                    _                    _                    NO  NO  _           _                    _                    _                    _                    NO
+NO  NO                   NO                   _                    _                    _                    _                    _                    _                    NO                   NO                   NO
+"""
+
+[[layer]]
+name = "mods_right"
+keys = """
+NO  _                    _                    _                    _                    _                    _                    _                    _                    _                    _                    NO
+NO  _                    _                    _                    _                    _                    RGui                 RShift               RCtrl                RAlt                 _                    NO
+NO  _                    _                    _                    _                    _                    NO  NO  _           _                    _                    _                    _                    NO
+NO  NO                   NO                   _                    _                    _                    _                    _                    _                    NO                   NO                   NO
+"""
+
+[[layer]]
+name = "wm"
+keys = """
+NO  WM(Kc1, LAlt)        WM(Kc2, LAlt)        WM(Kc3, LAlt)        WM(Kc4, LAlt)        WM(Kc5, LAlt)        WM(Kc6, LAlt)        WM(Kc7, LAlt)        WM(Kc8, LAlt)        WM(Kc9, LAlt)        WM(Kc0, LAlt)        NO
+NO  NO                   NO                   NO                   NO                   NO                   WM(M, LAlt)          WM(N, LAlt)          WM(E, LAlt)          WM(I, LAlt)          WM(O, LAlt)          NO
+NO  WM(Tab, LAlt)        WM(Tab, LAlt | LShift) WM(Comma, LAlt)   WM(Equal, LAlt)      WM(Minus, LAlt)      NO  NO  WM(N, LAlt | LShift) WM(E, LAlt | LShift) WM(I, LAlt | LShift) WM(O, LAlt | LShift) WM(F, LAlt) NO
+NO  NO                   NO                   NO                   NO                   NO                   WM(Slash, LAlt)      NO                   NO                   NO                   NO                   NO
+"""
 
 [behavior.one_shot]
 timeout = "3s"
@@ -104,7 +221,11 @@ timeout = "50ms"
 combos = []
 
 [behavior.morse]
-enable_flow_tap = false
-hold_on_other_press = true
-hold_timeout = "250ms"
-gap_timeout = "250ms"
+enable_flow_tap = true
+prior_idle_time = "80ms"
+hold_timeout = "150ms"
+gap_timeout = "150ms"
+
+[behavior.morse.profiles]
+HRM = { unilateral_tap = true, permissive_hold = true, hold_timeout = "150ms", gap_timeout = "150ms" }
+FH = { hold_on_other_press = true, hold_timeout = "150ms", gap_timeout = "150ms" }
