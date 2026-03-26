@@ -20,6 +20,8 @@ own RMK firmware for Cornix, not to replicate the official firmware.
 
 # Usage
 
+For stock/vendor firmware recovery notes, see [docs/official-firmware-flashing.md](docs/official-firmware-flashing.md).
+
 1. Make any changes you want for the firmware.
 
 2. Enter the dev environment:
